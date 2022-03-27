@@ -258,7 +258,7 @@ def login():
             login_attempts = 0
             pyautogui.hotkey('ctrl','f5')
             logger('REFRESH PAGE ...')
-            timeout(5)
+            time.sleep(5)
             login()
             pass
     if clickBtn(images['connect-login-bomb'], timeout = 10):
@@ -359,11 +359,8 @@ def main():
                     if clickBtn(images['new-map']):
                         loggerMapClicked();
                 if last in windows:
+                    time.sleep(5)
                     last["window"].activate()
-            else:
-                pyautogui.hotkey('ctrl','f5')
-                logger('REFRESH PAGE ...')
-                login()
             logger(None, progress_indicator=True)
             sys.stdout.flush()
             time.sleep(1)
