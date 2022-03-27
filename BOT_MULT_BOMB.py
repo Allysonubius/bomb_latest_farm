@@ -231,9 +231,9 @@ def goToHeroes():
     if clickBtn(images['go-back-arrow']):
         global login_attempts
         login_attempts = 0
-    timeout(2)
+    timeout(1)
     clickBtn(images['hero-icon'])
-    timeout(2)
+    timeout(1)
 
 def goToGame():
     logger('ENVIANDO PARA O MAPA ...')
@@ -241,6 +241,7 @@ def goToGame():
     clickBtn(images['x'])
     timeout(10)
     clickBtn(images['treasure-hunt-icon'])
+    timeout(5)
 
 def refreshHeroesPositions():
     logger('REINCIANDO POSIÇÔES DO HEROIS')
@@ -254,6 +255,7 @@ def login():
     if clickBtn(images['connect-wallet'], name='connectWalletBtn', timeout = 10):
         logger('BOTÂO DA CARTEIRA ENCONTRADO, REALIANDO LOGIN ...')
         login_attempts = login_attempts + 1
+        timeout(3)
         if login_attempts > 3:
             login_attempts = 0
             pyautogui.hotkey('ctrl','f5')
@@ -263,6 +265,7 @@ def login():
             pass
     if clickBtn(images['connect-login-bomb'], timeout = 10):
         logger('CONECTANDO ...')
+        timeout(3)
         goToGame()
         pass
     if clickBtn(images['ok'], name='okBtn', timeout=5):
@@ -349,6 +352,7 @@ def main():
             if now - last["login"] > addRandomness(t['check_for_login'] * 60):
                 sys.stdout.flush()
                 last["login"] = now
+                timeout(5)
                 login()
                 timeout(5)
                 if now - last["heroes"] > addRandomness(t['send_heroes_for_work'] * 60):
@@ -361,6 +365,7 @@ def main():
                 if last in windows:
                     time.sleep(5)
                     last["window"].activate()
+                    timeout(10)
             logger(None, progress_indicator=True)
             sys.stdout.flush()
             time.sleep(1)
