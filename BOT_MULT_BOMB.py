@@ -157,9 +157,9 @@ def scroll():
     epic = positions(images['epic-text'], threshold = ct['epic']);
     legend = positions(images['legend-text'], threshold = ct['legend']);
 
-    if (len(commoms and rare and superrare and epic and legend) == 0):
+    if (len(commoms or rare or superrare or epic or legend) == 0):
         return
-    x,y,w,h = commoms and rare and superrare and epic and legend[len(commoms and rare and superrare and epic and legend)-1]
+    x,y,w,h = commoms or rare or superrare or epic or legend[len(commoms or rare or superrare or epic or legend)-1]
     moveToWithRandomness(x,y,1)
     if not c['use_click_and_drag_instead_of_scroll']:
         pyautogui.scroll(-c['scroll_size'])
