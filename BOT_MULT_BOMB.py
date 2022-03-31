@@ -151,15 +151,11 @@ def positions(target, threshold=ct['default'],img = None):
     return rectangles
 
 def scroll():
-    commoms = positions(images['commom-text'], threshold = ct['commom']);
-    rare = positions(images['rare-text'], threshold = ct['rare']);
-    superrare = positions(images['superrare-text'], threshold = ct['super']);
-    epic = positions(images['epic-text'], threshold = ct['epic']);
-    legend = positions(images['legend-text'], threshold = ct['legend']);
+    commoms = positions(images['barra-img']);
 
-    if (len(commoms or rare or superrare or epic or legend) == 0):
+    if (len(commoms) == 0):
         return
-    x,y,w,h = commoms or rare or superrare or epic or legend[len(commoms or rare or superrare or epic or legend)-1]
+    x,y,w,h = commoms [len(commoms )-1]
     moveToWithRandomness(x,y,1)
     if not c['use_click_and_drag_instead_of_scroll']:
         pyautogui.scroll(-c['scroll_size'])
