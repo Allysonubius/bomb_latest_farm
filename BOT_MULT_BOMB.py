@@ -150,8 +150,13 @@ def positions(target, threshold=ct['default'],img = None):
     rectangles, weights = cv2.groupRectangles(rectangles, 1, 0.2)
     return rectangles
 
+def imageHero():
+    if(positions(images['commom-text'],threshold= ct['commom'])):
+        pass
+
 def scroll():
-    commoms = positions(images['commom-text'], threshold = ct['commom'] or images['rare-text'], threshold = ct['rare'] or images['superrare-text'], threshold = ct['super rare'] or images['epic-text'], threshold = ct['epic'] or images['legend-text'], threshold = ct['legend'])
+    commoms = imageHero();
+    # positions(images['commom-text'], threshold = ct['commom'] or images['rare-text'] threshold = ct['rare'] or images['superrare-text'], threshold = ct['super rare'] or images['epic-text'], threshold = ct['epic'] or images['legend-text'], threshold = ct['legend'])
     if (len(commoms) == 0):
         return
     x,y,w,h = commoms[len(commoms)-1]
