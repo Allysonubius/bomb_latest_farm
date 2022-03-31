@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-    
 from socket import timeout
-from cv2 import cv2
+from cv2 import cv2, threshold
 from os import listdir
 from src.logger import logger, loggerMapClicked
 from random import randint
@@ -151,7 +151,7 @@ def positions(target, threshold=ct['default'],img = None):
     return rectangles
 
 def scroll():
-    commoms = positions(images['commom-text'], threshold = ct['commom'])
+    commoms = positions(images['commom-text'], threshold = ct['commom'] or images['rare-text'], threshold = ct['rare'] or images['superrare-text'], threshold = ct['super rare'] or images['epic-text'], threshold = ct['epic'] or images['legend-text'], threshold = ct['legend'])
     if (len(commoms) == 0):
         return
     x,y,w,h = commoms[len(commoms)-1]
@@ -367,10 +367,10 @@ def main():
                     if clickBtn(images['new-map']):
                         loggerMapClicked();
                         pass
-                if last in windows:
-                    timeout(20)
-                    last["window"].activate()
-                    timeout(20)
+                #if last in windows:
+                #    timeout(20)
+                #    last["window"].activate()
+                #    timeout(20)
             logger(None, progress_indicator=True)
             sys.stdout.flush()
             time.sleep(1)
