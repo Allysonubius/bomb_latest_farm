@@ -221,13 +221,9 @@ def goToHeroes():
 
 def goToGame():
     logger('ENVIANDO PARA O MAPA ...')
-    time.sleep(2)
     clickBtn(images['x'])
     clickBtn(images['x'])
-    time.sleep(2)
     clickBtn(images['treasure-hunt-icon'])
-    clickBtn(images['treasure-hunt-icon'])
-    time.sleep(30)
 
 def refreshHeroesPositions():
     logger('REINCIANDO POSIÇÔES DO HEROIS')
@@ -241,7 +237,7 @@ def login():
     if clickBtn(images['connect-wallet'], name='connectWalletBtn', timeout = 10):
         logger('BOTÂO DA CARTEIRA ENCONTRADO, REALIANDO LOGIN ...')
         login_attempts = login_attempts + 1
-        if login_attempts > 3:
+        if login_attempts > 2:
             login_attempts = 0
             pyautogui.hotkey('ctrl','f5')
             logger('REFRESH PAGE ...')
@@ -254,6 +250,7 @@ def login():
         goToGame()
         pass
     if clickBtn(images['ok'], name='okBtn', timeout=5):
+        logger('ENCONTRADO BOTÂO OK ...')
         pass
 
 def sendHeroesHome():
@@ -315,11 +312,10 @@ def refreshHeroes():
                 scroll()
                 pass
         sendHeroesHome()
-        timeout(5)
     goToGame()
 
 def main():
-    time.sleep(10)
+    timeout(5)
     t = c['time_intervals']
     windows = []
     for w in pygetwindow.getWindowsWithTitle('bombcrypto'):
@@ -333,19 +329,15 @@ def main():
     while True:
         now = time.time() * 60;
         for last in windows:
-            logger('TROCANDO PARA PROXIMA CONTA ...')
             last["window"].activate()
-            loggerMapClicked();
-            timeout(10)
             if now - last["login"] > addRandomness(t['check_for_login'] * 60):
                 sys.stdout.flush()
                 last["login"] = now
                 login()
-                loggerMapClicked();
+                time.sleep(30)
                 if now - last["heroes"] > addRandomness(t['send_heroes_for_work'] * 60):
                     last["heroes"] = now
                     refreshHeroes()
-                    loggerMapClicked();
                     time.sleep(30)
                     pass
                 if now - last["new_map"] > t['check_for_new_map_button']:
@@ -356,5 +348,5 @@ def main():
                 time.sleep(30)
             logger(None, progress_indicator=True)
             sys.stdout.flush()
-            time.sleep(1)
+            timeout(10)
 main()
