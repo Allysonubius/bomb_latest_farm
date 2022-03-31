@@ -237,12 +237,13 @@ def goToHeroes():
 
 def goToGame():
     logger('ENVIANDO PARA O MAPA ...')
+    time.sleep(2)
     clickBtn(images['x'])
     clickBtn(images['x'])
-    timeout(5)
+    time.sleep(2)
     clickBtn(images['treasure-hunt-icon'])
     clickBtn(images['treasure-hunt-icon'])
-    time.sleep(20)
+    time.sleep(30)
 
 def refreshHeroesPositions():
     logger('REINCIANDO POSIÇÔES DO HEROIS')
@@ -256,7 +257,6 @@ def login():
     if clickBtn(images['connect-wallet'], name='connectWalletBtn', timeout = 10):
         logger('BOTÂO DA CARTEIRA ENCONTRADO, REALIANDO LOGIN ...')
         login_attempts = login_attempts + 1
-        time.sleep(3)
         if login_attempts > 3:
             login_attempts = 0
             pyautogui.hotkey('ctrl','f5')
@@ -266,7 +266,7 @@ def login():
             pass
     if clickBtn(images['connect-login-bomb'], timeout = 10):
         logger('CONECTANDO ...')
-        time.sleep(3)
+        time.sleep(5)
         goToGame()
         pass
     if clickBtn(images['ok'], name='okBtn', timeout=5):
@@ -331,7 +331,7 @@ def refreshHeroes():
                 scroll()
                 pass
         sendHeroesHome()
-        timeout(3)
+        timeout(5)
     goToGame()
 
 def main():

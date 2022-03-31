@@ -2,7 +2,7 @@ from src.date import dateFormatted
 
 import sys
 import yaml
-
+from socket import timeout
 
 stream = open("./config.yaml", 'r')
 c = yaml.safe_load(stream)
@@ -30,7 +30,7 @@ def logger(message, progress_indicator = False, color = 'default'):
     formatted_message = "[{}] => {}".format(formatted_datetime, message)
     formatted_message_colored  = color_formatted + formatted_message + '\033[0m'
 
-    
+    timeout(5)
     # Start progress indicator and append dots to in subsequent progress calls
     if progress_indicator:
         if not last_log_is_progress:
@@ -58,7 +58,7 @@ def logger(message, progress_indicator = False, color = 'default'):
     return True
 
 def loggerMapClicked():
-  logger('🗺️ New Map button clicked!')
+  logger('🗺️ NOVO MAPA!')
   logger_file = open("./logs/new-map.log", "a", encoding='utf-8')
   logger_file.write(dateFormatted() + '\n')
   logger_file.close()
