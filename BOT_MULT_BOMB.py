@@ -150,18 +150,16 @@ def positions(target, threshold=ct['default'],img = None):
     rectangles, weights = cv2.groupRectangles(rectangles, 1, 0.2)
     return rectangles
 
-def imageHero():
-    # positions(images['commom-text'],threshold= ct['commom']) | positions(images['rare-text'],threshold= ct['rare']) | positions(images['superrare-text'],threshold= ct['super']) | positions(images['epic-text'],threshold= ct['epic']) | positions(images['legend-text'],threshold= ct['legend'])
-    positions(images['commom-text'],threshold= ct['commom']);
-    pass
-    
-
 def scroll():
-    commoms = imageHero();
-    # positions(images['commom-text'], threshold = ct['commom'] or images['rare-text'] threshold = ct['rare'] or images['superrare-text'], threshold = ct['super rare'] or images['epic-text'], threshold = ct['epic'] or images['legend-text'], threshold = ct['legend'])
-    if (len(commoms) == 0):
+    commoms = positions(images['commom-text'], threshold = ct['commom']);
+    rare = positions(images['rare-text'], threshold = ct['rare']);
+    superrare = positions(images['superrare-text'], threshold = ct['super']);
+    epic = positions(images['epic-text'], threshold = ct['epic']);
+    legend = positions(images['legend-text'], threshold = ct['legend']);
+
+    if (len(commoms | rare | superrare | epic | legend) == 0):
         return
-    x,y,w,h = commoms[len(commoms)-1]
+    x,y,w,h = commoms | rare | superrare | epic | legend[len(commoms)-1]
     moveToWithRandomness(x,y,1)
     if not c['use_click_and_drag_instead_of_scroll']:
         pyautogui.scroll(-c['scroll_size'])
