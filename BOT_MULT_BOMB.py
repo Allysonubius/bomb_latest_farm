@@ -151,8 +151,13 @@ def positions(target, threshold=ct['default'],img = None):
     return rectangles
 
 def imageHero():
-    if(positions(images['commom-text'],threshold= ct['commom'])):
-        pass
+    positions(images['commom-text'],threshold= ct['commom']),
+    positions(images['rare-text'],threshold= ct['rare']),
+    positions(images['superrare-text'],threshold= ct['super rare']),
+    positions(images['epic-text'],threshold= ct['epic']),
+    positions(images['legend-text'],threshold= ct['legend'])
+    pass
+    
 
 def scroll():
     commoms = imageHero();
