@@ -176,8 +176,8 @@ def isWorking(bar, buttons):
 
 def clickGreenBarButtons():
     offset = 150
-    green_bars = positions(images['green-bar'], threshold=ct['green_bar'])
-    buttons = positions(images['go-work'], threshold=ct['go_to_work_btn'])
+    green_bars = positions(images['green-bar'])
+    buttons = positions(images['go-work'])
     logger('%d HEROS ' % len(buttons))
     not_working_green_bars = []
     for bar in green_bars:
@@ -285,11 +285,11 @@ def refreshHeroes():
     logger('PROCURANDO HEROIS PARA REALIZAR O TRABALHO ...')
     goToHeroes()
     if c['select_heroes_mode'] == "full":
-        logger('ENVIANDO HEROIS PARA TRABALHAR COM ESTAMINA CHEIA ...', 'green')
-    if c['select_heroes_mode'] == "green":
+        logger('ENVIANDO HEROIS PARA TRABALHAR COM ESTAMINA CHEIA ...', 'full')
+    elif c['select_heroes_mode'] == "green":
         logger('ENVIANDO HEROIS PARA TRABALHAR COM ESTAMINA VERDE ...', 'green')
     else:
-        logger('ENVIANDO TODOS OS HEROIS PARA O TRABALHO ...', 'green')
+        logger('ENVIANDO TODOS OS HEROIS PARA O TRABALHO ...', 'all')
     buttonsClicked = 1
     empty_scrolls_attempts = c['scroll_attemps']
     while(empty_scrolls_attempts >0):
