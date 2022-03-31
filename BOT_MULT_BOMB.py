@@ -151,7 +151,7 @@ def positions(target, threshold=ct['default'],img = None):
     return rectangles
 
 def imageHero():
-    positions(images['commom-text'],threshold= ct['commom']) and positions(images['rare-text'],threshold= ct['rare']) and positions(images['superrare-text'],threshold= ct['super rare']) and positions(images['epic-text'],threshold= ct['epic']) and positions(images['legend-text'],threshold= ct['legend'])
+    positions(images['commom-text'],threshold= ct['commom']) & positions(images['rare-text'],threshold= ct['rare']) & positions(images['superrare-text'],threshold= ct['super rare']) & positions(images['epic-text'],threshold= ct['epic']) & positions(images['legend-text'],threshold= ct['legend'])
     pass
     
 
