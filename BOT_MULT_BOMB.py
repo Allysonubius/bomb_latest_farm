@@ -76,24 +76,7 @@ def loadHeroesToSendHome():
 if ch['enable']:
     home_heroes = loadHeroesToSendHome()
 
-# go_work_img = cv2.imread('targets/go-work.png')
-# commom_img = cv2.imread('targets/commom-text.png')
-# arrow_img = cv2.imread('targets/go-back-arrow.png')
-# hero_img = cv2.imread('targets/hero-icon.png')
-# x_button_img = cv2.imread('targets/x.png')
-# teasureHunt_icon_img = cv2.imread('targets/treasure-hunt-icon.png')
-# ok_btn_img = cv2.imread('targets/ok.png')
-# connect_wallet_btn_img = cv2.imread('targets/connect-wallet.png')
-# select_wallet_hover_img = cv2.imread('targets/select-wallet-1-hover.png')
-# select_metamask_no_hover_img = cv2.imread('targets/select-wallet-1-no-hover.png')
-# sign_btn_img = cv2.imread('targets/select-wallet-2.png')
-# new_map_btn_img = cv2.imread('targets/new-map.png')
-# green_bar = cv2.imread('targets/green-bar.png')
 full_stamina = cv2.imread('targets/full-stamina.png')
-robot = cv2.imread('targets/robot.png')
-# puzzle_img = cv2.imread('targets/puzzle.png')
-# piece = cv2.imread('targets/piece.png')
-slider = cv2.imread('targets/slider.png')
 
 def show(rectangles, img = None):
     if img is None:
@@ -350,18 +333,19 @@ def main():
     while True:
         now = time.time() * 60;
         for last in windows:
-            timeout(20)
             logger('TROCANDO PARA PROXIMA CONTA ...')
             last["window"].activate()
-            timeout(20)
+            loggerMapClicked();
+            timeout(10)
             if now - last["login"] > addRandomness(t['check_for_login'] * 60):
                 sys.stdout.flush()
                 last["login"] = now
-                time.sleep(20)
                 login()
+                loggerMapClicked();
                 if now - last["heroes"] > addRandomness(t['send_heroes_for_work'] * 60):
                     last["heroes"] = now
                     refreshHeroes()
+                    loggerMapClicked();
                     time.sleep(30)
                     pass
                 if now - last["new_map"] > t['check_for_new_map_button']:
@@ -369,10 +353,7 @@ def main():
                     if clickBtn(images['new-map']):
                         loggerMapClicked();
                         pass
-                #if last in windows:
-                #    timeout(20)
-                #    last["window"].activate()
-                #    timeout(20)
+                time.sleep(30)
             logger(None, progress_indicator=True)
             sys.stdout.flush()
             time.sleep(1)
