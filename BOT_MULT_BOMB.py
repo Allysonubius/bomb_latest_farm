@@ -351,6 +351,7 @@ def main():
         now = time.time() * 60;
         for last in windows:
             timeout(20)
+            logger('TROCANDO PARA PROXIMA CONTA ...')
             last["window"].activate()
             timeout(20)
             if now - last["login"] > addRandomness(t['check_for_login'] * 60):
