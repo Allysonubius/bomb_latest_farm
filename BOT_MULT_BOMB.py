@@ -105,29 +105,24 @@ def show(rectangles, img = None):
     cv2.imshow('img',img)
     cv2.waitKey(0)
 
-def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
+def clickBtn(img, timeout=3, threshold = ct['default']):
+    
     logger(None, progress_indicator=True)
-    if not name is None:
-        pass
     start = time.time()
-    while(True):
+    has_timed_out = False
+    while(not has_timed_out):
         matches = positions(img, threshold=threshold)
+
         if(len(matches)==0):
-            hast_timed_out = time.time()-start > timeout
-            if(hast_timed_out):
-                if not name is None:
-                    pass
-                return False
+            has_timed_out = time.time()-start > timeout
             continue
 
         x,y,w,h = matches[0]
         pos_click_x = x+w/2
         pos_click_y = y+h/2
-        # mudar moveto pra w randomness
         moveToWithRandomness(pos_click_x,pos_click_y,1)
         pyautogui.click()
         return True
-        print("THIS SHOULD NOT PRINT")
 
 
 def printSreen():
@@ -169,7 +164,9 @@ def clickButtons():
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1
+
         if hero_clicks > 20:
+            logger('muitos cliques de herói, tente aumentar go_to_work_btn limiar')
             return
     return len(buttons)
 
@@ -193,8 +190,8 @@ def isWorking(bar, buttons):
 
 def clickGreenBarButtons():
     offset = 150
-    green_bars = positions(images['green-bar'])
-    buttons = positions(images['go-work'])
+    green_bars = positions(images['green-bar'], threshold=ct['green_bar'])
+    buttons = positions(images['go-work'], threshold=ct['go_to_work_btn'])
     logger('%d HEROS ' % len(buttons))
     not_working_green_bars = []
     for bar in green_bars:
@@ -202,15 +199,18 @@ def clickGreenBarButtons():
             not_working_green_bars.append(bar)
     if len(not_working_green_bars) > 0:
         logger('ENCONTRADO HEROIS COM ESTAMINA VERDE' )
+    hero_clicks_cnt = 0
     for (x, y, w, h) in not_working_green_bars:
         moveToWithRandomness(x+offset+(w/2),y+(h/2),1)
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1
-        if hero_clicks > 20:
+        hero_clicks_cnt = hero_clicks_cnt + 1
+        if hero_clicks_cnt > 20:
+            logger('Muitos cliques de herói, tente aumentar o go_to_work_btn limiar')
             return
-    return len(not_working_green_bars)
 
+    return len(not_working_green_bars)
 def clickFullBarButtons():
     offset = 150
     full_bars = positions(images['full-stamina'], threshold=ct['default'])
@@ -232,9 +232,8 @@ def goToHeroes():
     if clickBtn(images['go-back-arrow']):
         global login_attempts
         login_attempts = 0
-    time.sleep(1)
     clickBtn(images['hero-icon'])
-    time.sleep(1)
+    time.sleep(randint(1,3))
 
 def goToGame():
     logger('ENVIANDO PARA O MAPA ...')
@@ -302,33 +301,29 @@ def refreshHeroes():
     logger('PROCURANDO HEROIS PARA REALIZAR O TRABALHO ...')
     goToHeroes()
     if c['select_heroes_mode'] == "full":
-        logger('ENVIANDO HEROIS PARA TRABALHAR COM ESTAMINA CHEIA ...', 'full')
+        logger('ENVIANDO HEROIS PARA TRABALHAR COM ESTAMINA CHEIA ...', 'green')
     elif c['select_heroes_mode'] == "green":
         logger('ENVIANDO HEROIS PARA TRABALHAR COM ESTAMINA VERDE ...', 'green')
     else:
-        logger('ENVIANDO TODOS OS HEROIS PARA O TRABALHO ...', 'all')
+        logger('ENVIANDO TODOS OS HEROIS PARA O TRABALHO ...', 'green')
     buttonsClicked = 1
     empty_scrolls_attempts = c['scroll_attemps']
+
     while(empty_scrolls_attempts >0):
         if c['select_heroes_mode'] == 'full':
             buttonsClicked = clickFullBarButtons()
-            if buttonsClicked == 0:
-                empty_scrolls_attempts = empty_scrolls_attempts - 1
-                scroll()
-                pass
         elif c['select_heroes_mode'] == 'green':
             buttonsClicked = clickGreenBarButtons()
-            if buttonsClicked == 0:
-                empty_scrolls_attempts = empty_scrolls_attempts - 1
-                scroll()
-                pass
         else:
             buttonsClicked = clickButtons()
-            if buttonsClicked == 0:
-                empty_scrolls_attempts = empty_scrolls_attempts - 1
-                scroll()
-                pass
+
         sendHeroesHome()
+
+        if buttonsClicked == 0:
+            empty_scrolls_attempts = empty_scrolls_attempts - 1
+        scroll()
+        time.sleep(5)
+    logger('HEROIS ENVIADO PARA O TRABALHO')
     goToGame()
 
 def main():
