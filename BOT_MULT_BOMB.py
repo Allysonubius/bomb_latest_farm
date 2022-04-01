@@ -28,6 +28,23 @@ ch = c['home']
 if not ch['enable']:
     print('\n')
 
+# go_work_img = cv2.imread('targets/go-work.png')
+# commom_img = cv2.imread('targets/commom-text.png')
+# arrow_img = cv2.imread('targets/go-back-arrow.png')
+# hero_img = cv2.imread('targets/hero-icon.png')
+# x_button_img = cv2.imread('targets/x.png')
+# teasureHunt_icon_img = cv2.imread('targets/treasure-hunt-icon.png')
+# ok_btn_img = cv2.imread('targets/ok.png')
+# connect_wallet_btn_img = cv2.imread('targets/connect-wallet.png')
+# select_wallet_hover_img = cv2.imread('targets/select-wallet-1-hover.png')
+# select_metamask_no_hover_img = cv2.imread('targets/select-wallet-1-no-hover.png')
+# sign_btn_img = cv2.imread('targets/select-wallet-2.png')
+# new_map_btn_img = cv2.imread('targets/new-map.png')
+green_bar = cv2.imread('targets/green-bar.png')
+full_stamina = cv2.imread('targets/full-stamina.png')
+# puzzle_img = cv2.imread('targets/puzzle.png')
+# piece = cv2.imread('targets/piece.png')
+
 pause = c['time_intervals']['interval_between_moviments']
 pyautogui.PAUSE = pause
 pyautogui.FAILSAFE = False
